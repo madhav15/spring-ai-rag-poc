@@ -7,25 +7,43 @@ import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.ollama.OllamaEmbeddingModel;
 import dev.langchain4j.store.embedding.EmbeddingStore;
 import dev.langchain4j.store.embedding.qdrant.QdrantEmbeddingStore;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.Duration;
 
 @Configuration
-@RequiredArgsConstructor
 public class AiConfig {
 
-    private final AppProperties appProperties;
+    @Value("${app.ai.ollama.base-url}")
+    private String ollamaBaseUrl;
+
+    @Value("${app.ai.ollama.timeout-minutes}")
+    private int ollamaTimeoutMinutes;
+
+    @Value("${app.ai.chat-model.name}")
+    private String chatModelName;
+
+    @Value("${app.ai.embedding-model.name}")
+    private String embeddingModelName;
+
+    @Value("${app.ai.qdrant.host}")
+    private String qdrantHost;
+
+    @Value("${app.ai.qdrant.port}")
+    private int qdrantPort;
+
+    @Value("${app.ai.qdrant.collection-name}")
+    private String qdrantCollectionName;
 
     @Bean
     public ChatLanguageModel chatModel() {
 
         return OllamaChatModel.builder()
-                .baseUrl(appProperties.getOllama().getBaseUrl())
-                .modelName(appProperties.getChatModel().getName())
-                .timeout(Duration.ofMinutes(appProperties.getOllama().getTimeoutMinutes()))
+                .baseUrl(ollamaBaseUrl)
+                .modelName(chatModelName)
+                .timeout(Duration.ofMinutes(ollamaTimeoutMinutes))
                 .build();
     }
 
@@ -33,8 +51,8 @@ public class AiConfig {
     public EmbeddingModel embeddingModel() {
 
         return OllamaEmbeddingModel.builder()
-                .baseUrl(appProperties.getOllama().getBaseUrl())
-                .modelName(appProperties.getEmbeddingModel().getName())
+                .baseUrl(ollamaBaseUrl)
+                .modelName(embeddingModelName)
                 .build();
     }
 
@@ -42,9 +60,9 @@ public class AiConfig {
     public EmbeddingStore<TextSegment> embeddingStore() {
 
         return QdrantEmbeddingStore.builder()
-                .host(appProperties.getQdrant().getHost())
-                .port(appProperties.getQdrant().getPort())
-                .collectionName(appProperties.getQdrant().getCollectionName())
+                .host(qdrantHost)
+                .port(qdrantPort)
+                .collectionName(qdrantCollectionName)
                 .build();
     }
 }

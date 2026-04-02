@@ -1,11 +1,11 @@
 package com.madhav.spring.ai.service;
 
-import com.madhav.spring.ai.config.AppProperties;
 import com.madhav.spring.ai.util.TextChunker;
 import dev.langchain4j.data.segment.TextSegment;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.store.embedding.EmbeddingStore;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -18,7 +18,9 @@ public class DocumentService {
 
     private final EmbeddingModel embeddingModel;
     private final EmbeddingStore<TextSegment> embeddingStore;
-    private final AppProperties appProperties;
+
+    @Value("${app.ai.chunking.chunk-size}")
+    private int chunkSize;
 
     public void ingest(String text) {
 
@@ -32,7 +34,7 @@ public class DocumentService {
 
     public void ingestPdfText(String text) {
 
-        List<String> chunks = TextChunker.chunk(text, appProperties.getChunking().getChunkSize());
+        List<String> chunks = TextChunker.chunk(text, chunkSize);
 
         for (String chunk : chunks) {
 

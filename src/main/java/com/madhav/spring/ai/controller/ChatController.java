@@ -1,6 +1,6 @@
 package com.madhav.spring.ai.controller;
 
-
+import com.madhav.spring.ai.dto.AskQuestionRequest;
 import com.madhav.spring.ai.service.DocumentService;
 import com.madhav.spring.ai.service.RagService;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +20,8 @@ public class ChatController {
         return "Document stored";
     }
 
-    @GetMapping("/ask")
-    public String ask(@RequestParam String question) {
-        return ragService.ask(question);
+    @PostMapping("/ask")
+    public String ask(@RequestBody AskQuestionRequest request) {
+        return ragService.ask(request.getQuestion());
     }
 }
