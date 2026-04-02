@@ -1,3 +1,21 @@
 spring:
   application:
     name: spring-ai-poc
+
+app:
+  ai:
+    ollama:
+      base-url: http://localhost:11434
+      timeout-minutes: 2
+    chat-model:
+      name: phi3:mini
+    embedding-model:
+      name: nomic-embed-text
+    qdrant:
+      host: localhost
+      port: 6334
+      collection-name: documents
+      vector-size: 768
+      distance-metric: Cosine
+    chunking:
+      chunk-size: 1000
