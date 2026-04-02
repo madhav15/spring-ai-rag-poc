@@ -334,4 +334,5 @@ For issues or questions:
 
 ## Limitation
 
-- Not near to actual llm performance. Used Ollama Models are very basic and have limited resource so limited performance should be expected
+- Not near to even basic llm performance. Used Ollama Models are very basic and have limited resource so limited performance should be expected.
+- Hellucination will be major problem.
