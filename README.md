@@ -331,3 +331,7 @@ For issues or questions:
 - Review application logs: `mvn spring-boot:run` output
 - Check Ollama logs: `ollama serve` terminal output
 - Verify Qdrant: `http://localhost:6333/dashboard`
+
+## Limitation
+
+- Not near to actual llm performance. Used Ollama Models are very basic and have limited resource so limited performance should be expected
