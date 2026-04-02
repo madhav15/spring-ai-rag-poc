@@ -323,9 +323,6 @@ curl -X PUT http://localhost:6333/collections/documents \
 3. Update documentation for new features
 4. Ensure Docker & Ollama services are running during development
 
-## License
-
-Specify your project license here.
 
 ## Support
 
